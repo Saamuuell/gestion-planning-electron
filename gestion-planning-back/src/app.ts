@@ -1,10 +1,13 @@
 import express from "express";
 import sqlite3 from "sqlite3";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 const app = express();
 const db = new sqlite3.Database("./mydb.sqlite");
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(cors());
 
 app.get("/", (_req, res) => {
@@ -32,7 +35,20 @@ app.get("/", (_req, res) => {
     });
   });
 });
-
+// Route pour obtenir tous les utilisateurs
+app.get("/users", (_req, res) => {
+  db.all("SELECT * FROM user", (err, rows) => {
+    if (err) {
+      res
+        .status(500)
+        .send(
+          "Erreur lors de la récupération des utilisateurs: " + err.message,
+        );
+    } else {
+      res.send(rows);
+    }
+  });
+});
 // Route pour obtenir l'utilisateur avec l'ID 1
 app.get("/user/1", (req, res) => {
   db.get("SELECT * FROM user WHERE id = 1", (err, row) => {
