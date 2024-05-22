@@ -21,10 +21,10 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center px-8 bg-bakery-white min-h-screen text-bakery-yellow">
+    <div className="flex flex-col justify-center items-center px-8 bg-tertiary min-h-screen text-primary">
       <h1 className="text-5xl font-extrabold underline mb-6">O'Pain Délices</h1>
       <GPButton
-        className="py-2 px-4 bg-bakery-yellow text-white rounded-lg shadow-lg hover:bg-bakery-darkyellow transition duration-300"
+        className="py-2 px-4 bg-secondary text-white rounded-lg shadow-lg hover:bg-secondary-dark transition-all"
         onClick={handleButton}
       >
         Click Me
