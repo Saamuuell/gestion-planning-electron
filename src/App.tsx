@@ -1,10 +1,11 @@
-import FullCalendar from "@fullcalendar/react";
 import "./App.css";
 import GPButton from "./components/GPButton";
 import { useEffect, useState } from "react";
 import GPModal from "./components/GPModal";
-import resourceTimelinePlugin from "@fullcalendar/resource-timeline"; //https://fullcalendar.io/docs/timeline-view
-
+import SwitchButton from "./components/SwitchButton";
+import Calendar from "./components/Calendar";
+// import { generateEvents, employees } from "./utils/calcPlanning";
+import { generateEvents, employees } from "./utils/calcPlanningRefacto";
 
 interface User {
   id: number;
@@ -12,9 +13,16 @@ interface User {
   last_name: string;
 }
 
+const resources: Array<{ id: string; title: string }> = [];
+
+for (const [key, value] of Object.entries(employees)) {
+  resources.push({ id: value.id, title: key });
+}
+
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
+  console.log(generateEvents("2024-06-01", "2024-06-30"));
 
   const handleButton = () => {
     setIsModalOpen(true);
@@ -63,12 +71,17 @@ function App() {
         ))}
       </ul>
       {isModalOpen && <GPModal handleOk={handleOk} handleCancel={closeModal} />}
-
-      <p className="mt-6 text-xl text-center">
-        Welcome to the planning management system.
-      </p>
-      <div className="mt-8 w-full max-w-4xl">
-        <FullCalendar plugins={[resourceTimelinePlugin]} />
+      <div className="flex flex-row justify-center gap-4 items-center my-3">
+        <p className="text-xl text-center">
+          Welcome to the planning management system.
+        </p>
+        <SwitchButton label="Affichage mode semaine" />
+      </div>
+      <div className="mt-8 w-full max-w-9xl">
+        <Calendar
+          resources={resources}
+          events={generateEvents("2024-06-01", "2024-06-30")}
+        />
       </div>
     </div>
   );
