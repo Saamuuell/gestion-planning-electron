@@ -5,17 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"cd gestion-planning-back && npm run start\" \"vite\"",
+    "dev:chrome": "concurrently \"cd gestion-planning-back && npm run start\" \"vite --mode chrome\"",
     "build": "tsc && vite build && electron-builder",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "ts-node ./src/utils/calcPlanning.ts"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.11",
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/react": "^6.1.11",
     "@fullcalendar/resource": "^6.1.11",
-    "@fullcalendar/resource-timeline": "^6.1.13",
     "@fullcalendar/timegrid": "^6.1.13",
+    "@fullcalendar/resource-timeline": "^6.1.11",
+    "date-fns": "^3.6.0",
     "formik": "^2.4.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
