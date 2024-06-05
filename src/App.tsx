@@ -5,6 +5,13 @@ import { useEffect, useState } from "react";
 import GPModal from "./components/GPModal";
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline"; //https://fullcalendar.io/docs/timeline-view
 
+
+interface User {
+  id: number;
+  first_name: string;
+  last_name: string;
+}
+
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
@@ -49,7 +56,7 @@ function App() {
         Click Me
       </GPButton>
       <ul>
-        {users.map((user) => (
+        {users.map((user: User) => (
           <li key={user.id}>
             {user.first_name} {user.last_name}
           </li>
