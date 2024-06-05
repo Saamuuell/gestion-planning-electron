@@ -1,17 +1,36 @@
 import FullCalendar from "@fullcalendar/react";
 import "./App.css";
-import dayGridPlugin from "@fullcalendar/daygrid";
 import GPButton from "./components/GPButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GPModal from "./components/GPModal";
+import resourceTimelinePlugin from "@fullcalendar/resource-timeline"; //https://fullcalendar.io/docs/timeline-view
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [users, setUsers] = useState([]);
 
   const handleButton = () => {
     setIsModalOpen(true);
   };
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("/api/users");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const usersData = await response.json();
+      setUsers(usersData);
+    } catch (error) {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    }
+  };
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -29,14 +48,20 @@ function App() {
       >
         Click Me
       </GPButton>
-
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>
+            {user.first_name} {user.last_name}
+          </li>
+        ))}
+      </ul>
       {isModalOpen && <GPModal handleOk={handleOk} handleCancel={closeModal} />}
 
       <p className="mt-6 text-xl text-center">
         Welcome to the planning management system.
       </p>
       <div className="mt-8 w-full max-w-4xl">
-        <FullCalendar plugins={[dayGridPlugin]} />
+        <FullCalendar plugins={[resourceTimelinePlugin]} />
       </div>
     </div>
   );
