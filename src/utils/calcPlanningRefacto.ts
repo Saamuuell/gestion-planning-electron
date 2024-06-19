@@ -5,19 +5,7 @@ import {
   startOfDay,
   addHours,
 } from "date-fns";
-
-interface TimeRange {
-  start: string;
-  end: string;
-}
-
-interface Employee {
-  id: string;
-  hours: number;
-  fixedOff: string[];
-  role: string;
-  fixedTimes?: { [key: string]: TimeRange };
-}
+import { employees } from "./Employees";
 
 interface Event {
   resourceId: string;
@@ -26,42 +14,11 @@ interface Event {
   title: string;
 }
 
-export const employees: { [key: string]: Employee } = {
-  Elodie: { id: "1", hours: 35, fixedOff: [], role: "vendeuse" },
-  Virginie: { id: "2", hours: 35, fixedOff: [], role: "vendeuse" },
-  Isabelle: {
-    id: "3",
-    hours: 30,
-    fixedOff: ["Wednesday", "Saturday"],
-    role: "vendeuse",
-  },
-  Lucie: {
-    id: "4",
-    hours: 6,
-    fixedOff: [],
-    role: "etudiante",
-    fixedTimes: { Saturday: { start: "13:30", end: "19:30" } },
-  },
-  Camille: {
-    id: "5",
-    hours: 6,
-    fixedOff: [],
-    role: "etudiante",
-    fixedTimes: { Sunday: { start: "07:30", end: "13:30" } },
-  },
-  Lola: {
-    id: "6",
-    hours: 35,
-    fixedOff: ["Tuesday", "Wednesday", "Thursday", "Friday"],
-    role: "apprentie",
-  },
-};
-
 function getTimeISO(date: Date, time: string): string {
   const [hours, minutes] = time.split(":").map(Number);
   return format(
     addHours(startOfDay(date), hours + minutes / 60),
-    "yyyy-MM-dd'T'HH:mm:ss"
+    "yyyy-MM-dd'T'HH:mm:ss",
   );
 }
 

@@ -13,7 +13,7 @@ app.use(cors());
 app.get("/", (_req, res) => {
   db.serialize(() => {
     db.run(
-      "CREATE TABLE if not exists user (id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT, email TEXT, phone_number TEXT, job TEXT, schedule JSON)",
+      "CREATE TABLE if not exists user (id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT, email TEXT, phone_number TEXT, job TEXT, schedule JSON)"
     );
     db.run(
       "INSERT INTO user (first_name, last_name, email, phone_number, job, schedule) VALUES (?, ?, ?, ?, ?, ?)",
@@ -24,7 +24,7 @@ app.get("/", (_req, res) => {
         "123-456-7890",
         "Developer",
         JSON.stringify({ start: "9:00", end: "17:00" }),
-      ],
+      ]
     );
     db.all("SELECT * FROM user", (err, rows) => {
       if (err) {
@@ -42,7 +42,7 @@ app.get("/users", (_req, res) => {
       res
         .status(500)
         .send(
-          "Erreur lors de la récupération des utilisateurs: " + err.message,
+          "Erreur lors de la récupération des utilisateurs: " + err.message
         );
     } else {
       res.send(rows);
@@ -56,7 +56,7 @@ app.get("/user/1", (req, res) => {
       res
         .status(500)
         .send(
-          "Erreur lors de la récupération de l'utilisateur: " + err.message,
+          "Erreur lors de la récupération de l'utilisateur: " + err.message
         );
     } else if (row) {
       res.send(row);
@@ -88,7 +88,7 @@ app.post("/user", (req, res) => {
       } else {
         res.status(201).send({ id: this.lastID });
       }
-    },
+    }
   );
 });
 const PORT = 3000;

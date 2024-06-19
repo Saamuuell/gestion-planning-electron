@@ -1,17 +1,12 @@
-import "./App.css";
-import GPButton from "./components/GPButton";
 import { useEffect, useState } from "react";
-import GPModal from "./components/GPModal";
-import SwitchButton from "./components/SwitchButton";
+import "./App.css";
 import Calendar from "./components/Calendar";
-// import { generateEvents, employees } from "./utils/calcPlanning";
-import { generateEvents, employees } from "./utils/calcPlanningRefacto";
-
-interface User {
-  id: number;
-  first_name: string;
-  last_name: string;
-}
+import GPButton from "./components/GPButton";
+import GPModalCreateEmploye from "./components/GPModalCreateEmploye";
+import SwitchButton from "./components/SwitchButton";
+import { generateEvents } from "./utils/calcPlanningRefacto";
+import { employees } from "./utils/Employees";
+import { Employee } from "./interfaces/Employee";
 
 const resources: Array<{ id: string; title: string }> = [];
 
@@ -20,13 +15,20 @@ for (const [key, value] of Object.entries(employees)) {
 }
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [users, setUsers] = useState([]);
-  console.log(generateEvents("2024-06-01", "2024-06-30"));
+  const [isModalCreateEmployeOpen, setIsModalCreateEmployeOpen] =
+    useState(false);
+  const [isModalCreateRuleOpen, setIsModalCreateRuleOpen] = useState(false);
+  const [employees, setEmployees] = useState<Employee[]>([]);
+  // console.log(generateEvents("2024-06-01", "2024-06-30"));
 
-  const handleButton = () => {
-    setIsModalOpen(true);
+  const handleButtonCreateEmploye = () => {
+    setIsModalCreateEmployeOpen(true);
   };
+
+  const handleButtonAddRule = () => {
+    setIsModalCreateRuleOpen(true);
+  };
+
   const fetchUsers = async () => {
     try {
       const response = await fetch("/api/users");
@@ -34,11 +36,16 @@ function App() {
         throw new Error("Network response was not ok");
       }
       const usersData = await response.json();
-      setUsers(usersData);
+      const usersWithTitles = usersData.map((user: Employee) => ({
+        ...user,
+        title: `${user.first_name} ${user.last_name}`,
+      }));
+      setEmployees(usersWithTitles);
+      console.log(employees);
     } catch (error) {
       console.error(
         "There has been a problem with your fetch operation:",
-        error
+        error,
       );
     }
   };
@@ -46,8 +53,12 @@ function App() {
   useEffect(() => {
     fetchUsers();
   }, []);
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeModalCreateEmploye = () => {
+    setIsModalCreateEmployeOpen(false);
+  };
+
+  const closeModalCreateRule = () => {
+    setIsModalCreateRuleOpen(false);
   };
 
   const handleOk = () => {
@@ -59,18 +70,16 @@ function App() {
       <h1 className="text-5xl font-extrabold underline mb-6">O'Pain Délices</h1>
       <GPButton
         className="py-2 px-4 bg-secondary text-white rounded-lg shadow-lg hover:bg-secondary-dark transition-all"
-        onClick={handleButton}
+        onClick={handleButtonCreateEmploye}
       >
-        Click Me
+        Ajouter un employé
       </GPButton>
-      <ul>
-        {users.map((user: User) => (
-          <li key={user.id}>
-            {user.first_name} {user.last_name}
-          </li>
-        ))}
-      </ul>
-      {isModalOpen && <GPModal handleOk={handleOk} handleCancel={closeModal} />}
+      {isModalCreateEmployeOpen && (
+        <GPModalCreateEmploye
+          handleOk={handleOk}
+          handleCancel={closeModalCreateEmploye}
+        />
+      )}
       <div className="flex flex-row justify-center gap-4 items-center my-3">
         <p className="text-xl text-center">
           Welcome to the planning management system.
@@ -78,8 +87,20 @@ function App() {
         <SwitchButton label="Affichage mode semaine" />
       </div>
       <div className="mt-8 w-full max-w-9xl">
+        <GPButton
+          className="py-2 px-4 bg-secondary text-white rounded-lg shadow-lg hover:bg-secondary-dark transition-all"
+          onClick={handleButtonAddRule}
+        >
+          Ajouter une règle
+        </GPButton>
+        {isModalCreateRuleOpen && (
+          <GPModalCreateEmploye
+            handleOk={handleOk}
+            handleCancel={closeModalCreateRule}
+          />
+        )}
         <Calendar
-          resources={resources}
+          resources={employees}
           events={generateEvents("2024-06-01", "2024-06-30")}
         />
       </div>

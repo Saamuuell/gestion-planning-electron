@@ -31,6 +31,11 @@ const Calendar: React.FC<CalendarProps> = ({ events, resources }) => {
   console.log(resources);
   return (
     <FullCalendar
+      headerToolbar={{
+        left: "today prev,next",
+        center: "title",
+        right: "resourceTimelineDay,resourceTimelineWeek",
+      }}
       plugins={[dayGridPlugin, resourceTimelinePlugin]}
       initialView="resourceTimelineDay"
       resources={resources}
@@ -38,12 +43,7 @@ const Calendar: React.FC<CalendarProps> = ({ events, resources }) => {
       slotMinTime={"06:00:00"}
       slotMaxTime={"22:00:00"}
       resourceAreaWidth="20%"
-      resourceAreaColumns={[
-        {
-          field: "title",
-          headerContent: "Employee",
-        },
-      ]}
+      resourceGroupField="job"
     />
   );
 };

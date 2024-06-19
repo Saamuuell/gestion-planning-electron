@@ -15,10 +15,10 @@ interface ExtendedFormikErrors extends FormikErrors<FormValues> {
   submit?: string;
 }
 
-const GPModal: React.FC<{ handleOk: () => void; handleCancel: () => void }> = ({
-  handleOk,
-  handleCancel,
-}) => {
+const GPModalCreateEmploye: React.FC<{
+  handleOk: () => void;
+  handleCancel: () => void;
+}> = ({ handleOk, handleCancel }) => {
   const formik = useFormik<FormValues>({
     initialValues: {
       first_name: "",
@@ -196,4 +196,4 @@ const GPModal: React.FC<{ handleOk: () => void; handleCancel: () => void }> = ({
     </div>
   );
 };
-export default GPModal;
+export default GPModalCreateEmploye;
