@@ -1,32 +1,64 @@
 import { Employee } from "../interfaces/Employee";
 
-export const employees: { [key: string]: Employee } = {
-  Elodie: { id: "1", hours: 35, fixedOff: [], role: "vendeuse" },
-  Virginie: { id: "2", hours: 35, fixedOff: [], role: "vendeuse" },
-  Isabelle: {
+export const employees:Employee[] = [
+  {
+    id: "1",
+    first_name: "Elodie",
+    last_name: "Dupont",
+    email: "elodie.dupont@example.com",
+    phone_number: "0612345678",
+    job: "vendeuse",
+    schedule: { start: "09:00", end: "18:00" },
+    title: "Elodie Dupont - Vendeuse à temps plein",
+  },
+  {
+    id: "2",
+    first_name: "Virginie",
+    last_name: "Martin",
+    email: "virginie.martin@example.com",
+    phone_number: "0623456789",
+    job: "vendeuse",
+    schedule: { start: "09:00", end: "18:00" },
+    title: "Virginnie Martin - Vendeuse à temps plein",
+  },
+  {
     id: "3",
-    hours: 30,
-    fixedOff: ["Wednesday", "Saturday"],
-    role: "vendeuse",
+    first_name: "Isabelle",
+    last_name: "Leroy",
+    email: "isabelle.leroy@example.com",
+    phone_number: "0634567890",
+    job: "vendeuse",
+    schedule: { start: "09:00", end: "15:00" },
+    title: "Isabelle Leroy - Vendeuse à temps partiel",
   },
-  Lucie: {
+  {
     id: "4",
-    hours: 6,
-    fixedOff: [],
-    role: "etudiante",
-    fixedTimes: { Saturday: { start: "13:30", end: "19:30" } },
+    first_name: "Lucie",
+    last_name: "Moreau",
+    email: "lucie.moreau@example.com",
+    phone_number: "0645678901",
+    job: "etudiante",
+    schedule: { start: "13:30", end: "19:30" },
+    title: "Lucie Moreau - Étudiante vendeuse le samedi",
   },
-  Camille: {
+  {
     id: "5",
-    hours: 6,
-    fixedOff: [],
-    role: "etudiante",
-    fixedTimes: { Sunday: { start: "07:30", end: "13:30" } },
+    first_name: "Camille",
+    last_name: "Fournier",
+    email: "camille.fournier@example.com",
+    phone_number: "0656789012",
+    job: "etudiante",
+    schedule: { start: "07:30", end: "13:30" },
+    title: "Camille Fournier - Étudiante vendeuse le dimanche",
   },
-  Lola: {
+  {
     id: "6",
-    hours: 35,
-    fixedOff: ["Tuesday", "Wednesday", "Thursday", "Friday"],
-    role: "apprentie",
+    first_name: "Lola",
+    last_name: "Girard",
+    email: "lola.girard@example.com",
+    phone_number: "0667890123",
+    job: "apprentie",
+    schedule: { start: "08:00", end: "16:00" },
+    title: "Lola Girard - Apprentie vendeuse",
   },
-};
+];

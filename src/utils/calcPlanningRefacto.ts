@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   format,
   eachDayOfInterval,
@@ -41,19 +42,19 @@ export function generateEvents(startDate: string, endDate: string): Event[] {
   return events;
 }
 
-function handleStandardDay(date: Date, dayName: string): Event[] {
+function handleStandardDay(date: Date, _dayName: string): Event[] {
   const morningShifts: Event[] = [];
   const afternoonShifts: Event[] = [];
 
-  Object.values(employees).forEach((employee) => {
-    if (employee.fixedOff.includes(dayName) || employee.role !== "vendeuse") {
+  employees.forEach((employee) => {
+    if (employee.job !== "vendeuse" && employee.job !== "apprentie") {
       return;
     }
 
-    const startMorning = getTimeISO(date, "06:30");
+    const startMorning = getTimeISO(date, employee.schedule.start);
     const endMorning = getTimeISO(date, "13:30");
     const startAfternoon = getTimeISO(date, "13:30");
-    const endAfternoon = getTimeISO(date, "20:30");
+    const endAfternoon = getTimeISO(date, employee.schedule.end);
 
     morningShifts.push({
       resourceId: employee.id,
@@ -70,44 +71,50 @@ function handleStandardDay(date: Date, dayName: string): Event[] {
   });
 
   const selectedEvents = [];
-  // Ensure there are at least two vendeuses in the morning
+  // Ensure there are at least two vendeuses or an apprentie in the morning
   if (morningShifts.length >= 2) {
     selectedEvents.push(...morningShifts.slice(0, 2));
+  } else if (morningShifts.length === 1) {
+    selectedEvents.push(morningShifts[0]);
+    const apprentieShift = morningShifts.find(
+      (shift) => employees.find((e) => e.id === shift.resourceId)?.job === "apprentie",
+    );
+    if (apprentieShift) {
+      selectedEvents.push(apprentieShift);
+    }
   }
 
-  // Ensure there is at least one vendeuse in the afternoon
+  // Ensure there is at least one vendeuse or an apprentie in the afternoon
   if (afternoonShifts.length >= 1) {
     selectedEvents.push(afternoonShifts[0]);
+  } else {
+    const apprentieShift = afternoonShifts.find(
+      (shift) => employees.find((e) => e.id === shift.resourceId)?.job === "apprentie",
+    );
+    if (apprentieShift) {
+      selectedEvents.push(apprentieShift);
+    }
   }
 
   return selectedEvents;
 }
 
 function handleWeekendDay(date: Date, dayName: string): Event[] {
-  // Logic for weekends could be specific, such as reduced hours or different staff requirements
   const shifts: Event[] = [];
 
-  Object.values(employees).forEach((employee) => {
-    if (employee.fixedOff.includes(dayName)) {
-      return;
-    }
+  employees.forEach((employee) => {
+    if (employee.job === "etudiante" || employee.job === "apprentie") {
+      const startTime = getTimeISO(date, employee.schedule.start);
+      const endTime = getTimeISO(date, employee.schedule.end);
 
-    const customTimes = employee.fixedTimes?.[dayName];
-    if (!customTimes) {
-      return; // If no custom times for weekends, assume they're not working
+      shifts.push({
+        resourceId: employee.id,
+        start: startTime,
+        end: endTime,
+        title: `${dayName} Shift`,
+      });
     }
-
-    shifts.push({
-      resourceId: employee.id,
-      start: getTimeISO(date, customTimes.start),
-      end: getTimeISO(date, customTimes.end),
-      title: `${dayName} Shift`,
-    });
   });
 
   return shifts;
 }
-
-// Example of usage
-// const events = generateEvents('2023-10-01', '2023-10-07');
-// console.log(events);

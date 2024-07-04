@@ -3,7 +3,6 @@ import "./App.css";
 import Calendar from "./components/Calendar";
 import GPButton from "./components/GPButton";
 import GPModalCreateEmploye from "./components/GPModalCreateEmploye";
-import SwitchButton from "./components/SwitchButton";
 import { generateEvents } from "./utils/calcPlanningRefacto";
 import { employees } from "./utils/Employees";
 import { Employee } from "./interfaces/Employee";
@@ -18,8 +17,9 @@ function App() {
   const [isModalCreateEmployeOpen, setIsModalCreateEmployeOpen] =
     useState(false);
   const [isModalCreateRuleOpen, setIsModalCreateRuleOpen] = useState(false);
-  const [employees, setEmployees] = useState<Employee[]>([]);
-  // console.log(generateEvents("2024-06-01", "2024-06-30"));
+  const [currentEmployees, setEmployees] = useState<Employee[]>([]);
+
+  //console.log(generateEvents("2024-06-01", "2024-06-30"));
 
   const handleButtonCreateEmploye = () => {
     setIsModalCreateEmployeOpen(true);
@@ -30,24 +30,31 @@ function App() {
   };
 
   const fetchUsers = async () => {
-    try {
-      const response = await fetch("/api/users");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const usersData = await response.json();
-      const usersWithTitles = usersData.map((user: Employee) => ({
-        ...user,
-        title: `${user.first_name} ${user.last_name}`,
-      }));
-      setEmployees(usersWithTitles);
-      console.log(employees);
-    } catch (error) {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
-      );
-    }
+
+    // const usersWithTitles = employees.map((user: Employee) => ({
+    //   ...user,
+    //   title: `${user.first_name} ${user.last_name}`,
+    // }));
+    setEmployees(employees);
+    console.log(employees);
+    // try {
+    //   const response = await fetch("/api/users");
+    //   if (!response.ok) {
+    //     throw new Error("Network response was not ok");
+    //   }
+    //   const usersData = await response.json();
+    //   const usersWithTitles = usersData.map((user: Employee) => ({
+    //     ...user,
+    //     title: `${user.first_name} ${user.last_name}`,
+    //   }));
+    //   setEmployees(usersWithTitles);
+    //   console.log(employees);
+    // } catch (error) {
+    //   console.error(
+    //     "There has been a problem with your fetch operation:",
+    //     error
+    //   );
+    // }
   };
 
   useEffect(() => {
@@ -101,7 +108,7 @@ function App() {
           />
         )}
         <Calendar
-          resources={employees}
+          resources={currentEmployees}
           events={generateEvents("2024-06-01", "2024-06-30")}
         />
       </div>

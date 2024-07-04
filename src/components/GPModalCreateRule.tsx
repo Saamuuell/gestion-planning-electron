@@ -18,7 +18,7 @@ interface ExtendedFormikErrors extends FormikErrors<FormValues> {
 const GPModalCreateEmploye: React.FC<{
   handleOk: () => void;
   handleCancel: () => void;
-}> = ({ handleOk, handleCancel }) => {
+}> = ({ handleOk }) => {
   const formik = useFormik<FormValues>({
     initialValues: {
       first_name: "",
