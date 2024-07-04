@@ -8,6 +8,15 @@
   );
 }
 
+.fc-header-toolbar {
+  position: sticky;
+  top: 6rem;
+  background-color: #f1f1fb;
+  z-index: 30;
+  padding-top: 2rem;
+}
+
+
 .toggle-switch {
   position: relative;
   width: 75px;

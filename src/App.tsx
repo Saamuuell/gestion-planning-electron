@@ -45,7 +45,7 @@ function App() {
     } catch (error) {
       console.error(
         "There has been a problem with your fetch operation:",
-        error,
+        error
       );
     }
   };
@@ -66,33 +66,34 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center px-8 bg-tertiary min-h-screen text-primary">
-      <h1 className="text-5xl font-extrabold underline mb-6">O'Pain Délices</h1>
-      <GPButton
-        className="py-2 px-4 bg-secondary text-white rounded-lg shadow-lg hover:bg-secondary-dark transition-all"
-        onClick={handleButtonCreateEmploye}
-      >
-        Ajouter un employé
-      </GPButton>
+    <div className="flex flex-col justify-center items-center px-8 bg-tertiary text-primary w-full">
+      <div className="flex justify-between items-center w-full sticky top-0 bg-tertiary z-30">
+        <h1 className="text-5xl font-extrabold mb-6">O'Pain Délices</h1>
+        <div className="flex flex-col gap-2 py-2">
+          <GPButton
+            className="py-2 px-4 bg-secondary text-white rounded-lg shadow-lg hover:bg-secondary-dark transition-all"
+            onClick={handleButtonCreateEmploye}
+          >
+            + Ajouter un employé
+          </GPButton>
+          <GPButton
+            className="py-2 px-4 bg-secondary text-white rounded-lg shadow-lg hover:bg-secondary-dark transition-all"
+            onClick={handleButtonAddRule}
+          >
+            + Ajouter une règle
+          </GPButton>
+        </div>
+      </div>
       {isModalCreateEmployeOpen && (
         <GPModalCreateEmploye
           handleOk={handleOk}
           handleCancel={closeModalCreateEmploye}
         />
       )}
-      <div className="flex flex-row justify-center gap-4 items-center my-3">
-        <p className="text-xl text-center">
-          Welcome to the planning management system.
-        </p>
+      {/* <div className="flex flex-row justify-center gap-4 items-center my-3">
         <SwitchButton label="Affichage mode semaine" />
-      </div>
-      <div className="mt-8 w-full max-w-9xl">
-        <GPButton
-          className="py-2 px-4 bg-secondary text-white rounded-lg shadow-lg hover:bg-secondary-dark transition-all"
-          onClick={handleButtonAddRule}
-        >
-          Ajouter une règle
-        </GPButton>
+      </div> */}
+      <div className="mt-20 w-full max-w-9xl">
         {isModalCreateRuleOpen && (
           <GPModalCreateEmploye
             handleOk={handleOk}

@@ -73,7 +73,7 @@ const GPModalCreateEmploye: React.FC<{
   });
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-10">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50">
       <div className="bg-white rounded-lg p-6 w-1/3">
         <h2 className="text-xl mb-4">Formulaire de Création d'Utilisateur</h2>
         <form onSubmit={formik.handleSubmit}>

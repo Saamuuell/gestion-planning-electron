@@ -8,15 +8,15 @@ export default {
         "bakery-gray": "#6E6E6E", // Couleur gris foncé
         "bakery-white": "#FFFFFF", // Couleur blanche
         primary:{
-          DEFAULT: "#f0d7a7",
-          dark: "#c7a97f",
+          DEFAULT: "#0d0f0e",
+          dark: "#000",
         },
         secondary:{
-          DEFAULT: "#c37960",
-          dark: "#9e4f3f",
+          DEFAULT: "#2d2e3a",
+          dark: "#3a3c4a",
         },
         tertiary:{
-          DEFAULT: "#894e3f",
+          DEFAULT: "#f1f1fb",
           dark: "#5c2d1f",
         },
           
