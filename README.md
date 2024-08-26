@@ -1,30 +1,50 @@
-# React + TypeScript + Vite
+# Gestion de Planning Automatique
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ce projet est une application de gestion de planning automatique développée avec [Electron](https://www.electronjs.org/). Elle permet de créer, organiser et gérer des plannings de manière automatique, en tenant compte de diverses contraintes et préférences définies par l'utilisateur.
 
-Currently, two official plugins are available:
+## Fonctionnalités
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Création Automatique de Planning** : Génération automatique de plannings en fonction des tâches, priorités, et contraintes horaires.
+- **Gestion des Tâches** : Ajout, modification et suppression de tâches avec prise en compte de la durée, de la priorité, et des dépendances.
+- **Interface Utilisateur Intuitive** : Interface graphique conviviale permettant de visualiser et d'interagir facilement avec le planning.
+- **Notifications** : Rappels et notifications pour les tâches à venir ou en retard.
+- **Sauvegarde et Chargement** : Sauvegarde et chargement des plannings en local.
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Prérequis
 
-- Configure the top-level `parserOptions` property like this:
+- [Node.js](https://nodejs.org/) (version 14 ou supérieure)
+- [Git](https://git-scm.com/)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+### Étapes d'installation
+
+1. Clonez ce dépôt :
+
+   ```bash
+   git clone https://github.com/votre-utilisateur/gestion-planning-automatique.git
+   cd gestion-planning-automatique
+   ```
+
+2. Installez les dépendances :
+
+   ```bash
+   npm install
+   ```
+
+3. Lancez l'application en mode développement :
+
+   ```bash
+   npm start
+   ```
+
+## Build pour la Production
+
+Pour créer une version distribuable de l'application :
+
+```bash
+npm run build
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Le build final sera disponible dans le dossier `dist`.
+
